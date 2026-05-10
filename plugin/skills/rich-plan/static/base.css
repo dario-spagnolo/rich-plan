@@ -1,0 +1,822 @@
+/* ===== rich-plan : base.css ===========================================
+   Stable, professional styling. The plan author should not need to
+   override anything; inline <style> in plan.html is allowed for
+   plan-specific tweaks.
+
+   Theming: every color is a CSS custom property. Light is the default;
+   `[data-theme="dark"]` on <html> overrides them. See refs/conventions/
+   theming.md for the available tokens.
+   ===================================================================== */
+
+:root {
+  --rp-text:        #1f2328;
+  --rp-text-muted:  #6e7781;
+  --rp-bg:          #ffffff;
+  --rp-bg-soft:     #f6f8fa;
+  --rp-bg-edit:     #fff8c5;
+  --rp-border:      #d0d7de;
+  --rp-border-soft: #eaeef2;
+  --rp-accent:      #0969da;
+  --rp-accent-bg:   #ddf4ff;
+  --rp-accent-hover:#0860c4;
+  --rp-accent-strong:#54aeff;
+  --rp-success:     #1a7f37;
+  --rp-success-hover:#197f37;
+  --rp-warn:        #9a6700;
+  --rp-danger:      #cf222e;
+
+  /* Diff and pill tints (derived from semantic colors, kept as discrete
+     tokens because dark mode needs softer, semi-transparent variants). */
+  --rp-add-bg:      #dafbe1;
+  --rp-add-text:    #116329;
+  --rp-add-border:  #aceebb;
+  --rp-del-bg:      #ffebe9;
+  --rp-del-text:    #82071e;
+  --rp-del-border:  #ffcecb;
+  --rp-edit-bg:     #fff8c5;
+  --rp-edit-text:   #7d4e00;
+  --rp-edit-border: #eac54f;
+
+  /* Comment tints (warn-colored, derived). */
+  --rp-comment-bg:        rgba(154, 103, 0, 0.14);
+  --rp-mark-bg:           rgba(154, 103, 0, 0.20);
+  --rp-mark-bg-hover:     rgba(154, 103, 0, 0.32);
+  --rp-edit-focus-shadow: rgba(154, 103, 0, 0.30);
+
+  /* Hover wash on rich-question labels (over the blue accent-bg). */
+  --rp-q-hover-wash:      rgba(255, 255, 255, 0.60);
+  /* Hover overlay on code lines (accent-colored). */
+  --rp-line-hover-bg:     rgba(9, 105, 218, 0.08);
+  --rp-focus-ring:        rgba(9, 105, 218, 0.25);
+  /* Drop-shadow behind 💬 markers — must contrast with code-block bg. */
+  --rp-line-marker-glow:  rgba(255, 255, 255, 0.60);
+
+  --rp-overlay:     rgba(15, 20, 25, 0.55);
+  --rp-shadow-soft: 0 2px 6px rgba(0, 0, 0, 0.08);
+  --rp-shadow-pop:  0 4px 16px rgba(0, 0, 0, 0.14);
+  --rp-shadow-bar:  0 -2px 12px rgba(0, 0, 0, 0.04);
+  --rp-shadow-modal:0 8px 32px rgba(0, 0, 0, 0.20);
+
+  --rp-color-scheme: light;
+  --rp-radius:      6px;
+  --rp-mono:        ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  --rp-sans:        -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --rp-width:       900px;
+}
+
+[data-theme="dark"] {
+  --rp-text:        #c9d1d9;
+  --rp-text-muted:  #8b949e;
+  --rp-bg:          #0d1117;
+  --rp-bg-soft:     #161b22;
+  --rp-bg-edit:     #3a2d04;
+  --rp-border:      #30363d;
+  --rp-border-soft: #21262d;
+  --rp-accent:      #58a6ff;
+  --rp-accent-bg:   #0c2d6b;
+  --rp-accent-hover:#79b8ff;
+  --rp-accent-strong:#79b8ff;
+  --rp-success:     #3fb950;
+  --rp-success-hover:#56d364;
+  --rp-warn:        #d29922;
+  --rp-danger:      #f85149;
+
+  --rp-add-bg:      rgba(46, 160, 67, 0.18);
+  --rp-add-text:    #7ee787;
+  --rp-add-border:  rgba(46, 160, 67, 0.40);
+  --rp-del-bg:      rgba(248, 81, 73, 0.18);
+  --rp-del-text:    #ffa198;
+  --rp-del-border:  rgba(248, 81, 73, 0.40);
+  --rp-edit-bg:     rgba(210, 153, 34, 0.20);
+  --rp-edit-text:   #e3b341;
+  --rp-edit-border: rgba(210, 153, 34, 0.40);
+
+  --rp-comment-bg:        rgba(210, 153, 34, 0.18);
+  --rp-mark-bg:           rgba(210, 153, 34, 0.28);
+  --rp-mark-bg-hover:     rgba(210, 153, 34, 0.45);
+  --rp-edit-focus-shadow: rgba(210, 153, 34, 0.40);
+
+  --rp-q-hover-wash:      rgba(255, 255, 255, 0.06);
+  --rp-line-hover-bg:     rgba(88, 166, 255, 0.12);
+  --rp-focus-ring:        rgba(88, 166, 255, 0.35);
+  --rp-line-marker-glow:  rgba(0, 0, 0, 0.50);
+
+  --rp-overlay:     rgba(0, 0, 0, 0.70);
+  --rp-shadow-soft: 0 2px 6px rgba(0, 0, 0, 0.40);
+  --rp-shadow-pop:  0 4px 16px rgba(0, 0, 0, 0.55);
+  --rp-shadow-bar:  0 -2px 12px rgba(0, 0, 0, 0.35);
+  --rp-shadow-modal:0 8px 32px rgba(0, 0, 0, 0.65);
+
+  --rp-color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+
+html {
+  color-scheme: var(--rp-color-scheme);
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--rp-bg-soft);
+  color: var(--rp-text);
+  font-family: var(--rp-sans);
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.2s ease, color 0.15s ease;
+}
+
+main {
+  max-width: var(--rp-width);
+  margin: 0 auto;
+  padding: 32px 24px 160px; /* bottom space for the sticky submit bar */
+  background: var(--rp-bg);
+  min-height: 100vh;
+  border-left: 1px solid var(--rp-border-soft);
+  border-right: 1px solid var(--rp-border-soft);
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+/* --- Headings -------------------------------------------------------- */
+h1, h2, h3, h4 {
+  margin-top: 1.6em;
+  margin-bottom: 0.5em;
+  line-height: 1.3;
+  font-weight: 600;
+}
+h1 { font-size: 1.9em; margin-top: 0; padding-bottom: 0.3em; border-bottom: 1px solid var(--rp-border-soft); }
+h2 { font-size: 1.4em; padding-bottom: 0.25em; border-bottom: 1px solid var(--rp-border-soft); }
+h3 { font-size: 1.15em; }
+h4 { font-size: 1em; color: var(--rp-text-muted); }
+
+p { margin: 0.75em 0; }
+ul, ol { margin: 0.5em 0; padding-left: 1.5em; }
+li { margin: 0.2em 0; }
+
+a { color: var(--rp-accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* --- Plan header ----------------------------------------------------- */
+.plan-header {
+  margin-bottom: 32px;
+}
+.plan-header .plan-summary {
+  color: var(--rp-text-muted);
+  font-size: 1.05em;
+}
+.plan-meta {
+  display: inline-flex;
+  gap: 12px;
+  font-size: 0.85em;
+  color: var(--rp-text-muted);
+  margin-top: 4px;
+}
+.plan-meta span { display: inline-flex; align-items: center; gap: 4px; }
+
+/* --- Sections -------------------------------------------------------- */
+.plan-section {
+  position: relative;
+  margin: 28px 0;
+  padding: 16px 18px;
+  border: 1px solid var(--rp-border-soft);
+  border-radius: var(--rp-radius);
+  background: var(--rp-bg);
+  transition: border-color 0.15s ease, background-color 0.2s ease;
+}
+.plan-section:hover {
+  border-color: var(--rp-border);
+}
+.plan-section > :first-child { margin-top: 0; }
+.plan-section > :last-child  { margin-bottom: 0; }
+
+.plan-section[data-modified="true"] {
+  border-left: 3px solid var(--rp-warn);
+}
+
+/* --- Editable -------------------------------------------------------- */
+.editable {
+  outline: none;
+  border-radius: 3px;
+  padding: 1px 3px;
+  transition: background-color 0.15s ease, box-shadow 0.15s ease;
+  position: relative;
+}
+.editable:hover {
+  background: var(--rp-bg-soft);
+}
+.editable:focus {
+  background: var(--rp-bg-edit);
+  box-shadow: 0 0 0 2px var(--rp-edit-focus-shadow);
+}
+.editable[data-modified="true"] {
+  background: var(--rp-bg-edit);
+}
+
+/* --- Code ------------------------------------------------------------ */
+pre, code {
+  font-family: var(--rp-mono);
+  font-size: 0.9em;
+}
+code:not([class*="language-"]) {
+  background: var(--rp-bg-soft);
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-size: 0.88em;
+}
+pre {
+  background: var(--rp-bg-soft);
+  border: 1px solid var(--rp-border-soft);
+  border-radius: var(--rp-radius);
+  padding: 12px 14px;
+  overflow-x: auto;
+  margin: 12px 0;
+  line-height: 1.45;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+pre code { background: transparent; padding: 0; }
+
+/* --- Diff ------------------------------------------------------------ */
+.diff {
+  font-family: var(--rp-mono);
+  font-size: 0.88em;
+  background: var(--rp-bg-soft);
+  border: 1px solid var(--rp-border-soft);
+  border-radius: var(--rp-radius);
+  overflow-x: auto;
+  margin: 12px 0;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+.diff-header {
+  padding: 6px 12px;
+  background: var(--rp-border-soft);
+  border-bottom: 1px solid var(--rp-border-soft);
+  font-weight: 600;
+  font-size: 0.85em;
+  color: var(--rp-text-muted);
+}
+.diff-body { padding: 8px 0; }
+.diff-line { display: block; padding: 0 12px; white-space: pre; }
+.diff-line.add  { background: var(--rp-add-bg); color: var(--rp-add-text); }
+.diff-line.del  { background: var(--rp-del-bg); color: var(--rp-del-text); }
+.diff-line.hunk { background: var(--rp-border-soft); color: var(--rp-text-muted); }
+
+/* --- File tree ------------------------------------------------------- */
+.file-tree {
+  font-family: var(--rp-mono);
+  font-size: 0.88em;
+  background: var(--rp-bg-soft);
+  border: 1px solid var(--rp-border-soft);
+  border-radius: var(--rp-radius);
+  padding: 12px 16px;
+  margin: 12px 0;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+.file-tree ul { list-style: none; padding-left: 18px; margin: 0; }
+.file-tree > ul { padding-left: 0; }
+.file-tree li { line-height: 1.7; position: relative; }
+.file-tree li.file::before { content: "📄 "; opacity: 0.7; }
+.file-tree li.dir::before { content: "📁 "; opacity: 0.7; }
+.file-tree .action {
+  font-size: 0.78em;
+  padding: 1px 6px;
+  border-radius: 10px;
+  margin-left: 8px;
+  font-weight: 600;
+}
+.file-tree .action.create { background: var(--rp-add-bg);  color: var(--rp-add-text); }
+.file-tree .action.edit   { background: var(--rp-edit-bg); color: var(--rp-edit-text); }
+.file-tree .action.delete { background: var(--rp-del-bg);  color: var(--rp-del-text); }
+
+/* --- Mermaid --------------------------------------------------------- */
+.mermaid {
+  text-align: center;
+  margin: 16px 0;
+  padding: 12px;
+  background: var(--rp-bg);
+  border: 1px solid var(--rp-border-soft);
+  border-radius: var(--rp-radius);
+  overflow-x: auto;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+/* --- Questions ------------------------------------------------------- */
+.rich-question {
+  position: relative;
+  margin: 16px 0;
+  padding: 14px 16px;
+  background: var(--rp-accent-bg);
+  border: 1px solid var(--rp-accent-strong);
+  border-radius: var(--rp-radius);
+}
+.rich-question .q-prompt {
+  font-weight: 600;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-right: 40px; /* room for the 💬 toggle in the corner */
+}
+.rich-question .q-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  height: 22px;
+  padding: 0 8px;
+  border-radius: 11px;
+  background: var(--rp-accent);
+  color: white;
+  font-size: 0.78em;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  flex-shrink: 0;
+}
+.rich-question label {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 6px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.1s;
+}
+.rich-question label:hover { background: var(--rp-q-hover-wash); }
+.rich-question input[type="radio"] { margin-top: 4px; flex-shrink: 0; }
+/* The auto-injected wrapper around each option's prose. Keeping the
+   post-radio content inside a single flex item is what stops <strong>,
+   <code>, and inter-tag text nodes from each becoming their own flex
+   item with a `gap` between them — the bug that fragmented sentences. */
+.rich-question label .q-option-text {
+  flex: 1;
+  line-height: 1.5;
+  min-width: 0;
+}
+.rich-question .q-default-tag {
+  font-size: 0.75em;
+  background: var(--rp-accent);
+  color: white;
+  padding: 1px 6px;
+  border-radius: 8px;
+  margin-left: 6px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+.rich-question .q-other-row {
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.rich-question .q-other-row input[type="text"] {
+  flex: 1;
+  padding: 6px 10px;
+  font-size: 0.95em;
+  border: 1px solid var(--rp-border);
+  border-radius: 4px;
+  background: var(--rp-bg);
+  color: var(--rp-text);
+  font-family: inherit;
+}
+.rich-question .q-other-row input[type="text"]:focus {
+  outline: none;
+  border-color: var(--rp-accent);
+  box-shadow: 0 0 0 2px var(--rp-accent-bg);
+}
+
+/* --- Custom forms ---------------------------------------------------- */
+/* Discreet container for <form class="rich-custom">. The author styles
+   the content however they want; this just gives a sane default frame
+   when no custom CSS is provided. The grey accent (vs the blue of
+   rich-question) signals "free-form widget" rather than "decision". */
+.rich-custom {
+  margin: 16px 0;
+  padding: 14px 16px;
+  background: var(--rp-bg-soft);
+  border: 1px solid var(--rp-border);
+  border-radius: var(--rp-radius);
+  display: block;
+}
+.rich-custom :invalid {
+  outline: 1px solid var(--rp-danger);
+  outline-offset: 1px;
+}
+
+/* --- Comments -------------------------------------------------------- */
+.rp-comment-toggle {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: transparent;
+  border: 1px solid var(--rp-border-soft);
+  color: var(--rp-text-muted);
+  border-radius: 4px;
+  padding: 2px 8px;
+  font-size: 0.78em;
+  cursor: pointer;
+  font-family: inherit;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.rp-comment-toggle:hover {
+  background: var(--rp-bg-soft);
+  color: var(--rp-text);
+  border-color: var(--rp-border);
+}
+.rp-comment-toggle.has-comments {
+  background: var(--rp-accent-bg);
+  border-color: var(--rp-accent);
+  color: var(--rp-accent);
+}
+.rp-comment-panel {
+  margin-top: 12px;
+  padding: 10px 12px;
+  background: var(--rp-bg-soft);
+  border-left: 3px solid var(--rp-accent);
+  border-radius: 0 var(--rp-radius) var(--rp-radius) 0;
+}
+.rp-comment-panel[hidden] { display: none; }
+.rp-comment-panel textarea {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  resize: vertical;
+  min-height: 56px;
+  padding: 6px 8px;
+  border: 1px solid var(--rp-border);
+  border-radius: 4px;
+  background: var(--rp-bg);
+  color: var(--rp-text);
+  font-family: inherit;
+  font-size: 0.9em;
+}
+.rp-comment-panel textarea:focus {
+  outline: none;
+  border-color: var(--rp-accent);
+  box-shadow: 0 0 0 2px var(--rp-accent-bg);
+}
+.rp-comment-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+  min-height: 22px;
+}
+.rp-save-status {
+  flex: 1;
+  font-size: 0.78em;
+  color: var(--rp-text-muted);
+  font-style: italic;
+}
+.rp-comment-delete {
+  background: transparent;
+  border: 1px solid var(--rp-border-soft);
+  color: var(--rp-text-muted);
+  font-size: 0.78em;
+  padding: 2px 10px;
+  border-radius: 3px;
+  cursor: pointer;
+  font-family: inherit;
+}
+.rp-comment-delete:hover {
+  color: var(--rp-danger);
+  border-color: var(--rp-del-border);
+  background: var(--rp-del-bg);
+}
+.rp-comment-delete[hidden] { display: none; }
+
+/* --- Granular comments (per-element) -------------------------------- */
+/* Single floating "open comment" button, repositioned on hover/select. */
+.rp-element-btn {
+  position: absolute;
+  z-index: 50;
+  display: none;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 6px;
+  background: var(--rp-bg);
+  border: 1px solid var(--rp-border);
+  color: var(--rp-text-muted);
+  border-radius: 12px;
+  font-size: 0.78em;
+  font-family: inherit;
+  cursor: pointer;
+  box-shadow: var(--rp-shadow-soft);
+  transition: color 0.1s, border-color 0.1s, background 0.1s;
+  user-select: none;
+}
+.rp-element-btn.visible { display: inline-flex; }
+.rp-element-btn:hover {
+  color: var(--rp-accent);
+  border-color: var(--rp-accent);
+  background: var(--rp-accent-bg);
+}
+
+/* Popover that opens when the user clicks the floating button. */
+.rp-element-popover {
+  position: absolute;
+  z-index: 60;
+  display: none;
+  width: 280px;
+  background: var(--rp-bg);
+  border: 1px solid var(--rp-border);
+  border-radius: var(--rp-radius);
+  box-shadow: var(--rp-shadow-pop);
+  padding: 10px 12px;
+}
+.rp-element-popover.visible { display: block; }
+.rp-element-popover .rp-target-snippet {
+  font-size: 0.8em;
+  color: var(--rp-text-muted);
+  background: var(--rp-bg-soft);
+  border-left: 3px solid var(--rp-accent);
+  padding: 4px 8px;
+  margin-bottom: 8px;
+  max-height: 60px;
+  overflow: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-family: var(--rp-mono);
+}
+.rp-element-popover textarea {
+  width: 100%;
+  resize: vertical;
+  min-height: 56px;
+  padding: 6px 8px;
+  border: 1px solid var(--rp-border);
+  border-radius: 4px;
+  background: var(--rp-bg);
+  color: var(--rp-text);
+  font-family: inherit;
+  font-size: 0.92em;
+  box-sizing: border-box;
+}
+.rp-element-popover .rp-pop-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+}
+.rp-element-popover .rp-pop-actions .rp-save-status {
+  /* status text on the left, buttons pushed right by flex:1 */
+  flex: 1;
+  font-size: 0.78em;
+  color: var(--rp-text-muted);
+  font-style: italic;
+}
+.rp-element-popover button {
+  padding: 4px 12px;
+  border: 1px solid var(--rp-border);
+  background: var(--rp-bg);
+  color: var(--rp-text);
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.85em;
+}
+.rp-element-popover button[hidden] { display: none; }
+.rp-element-popover button[data-act="delete"]:hover {
+  color: var(--rp-danger);
+  border-color: var(--rp-del-border);
+  background: var(--rp-del-bg);
+}
+
+/* Persistent visual marker on elements that carry an inline comment.
+   Yellow tint + tiny corner badge → visible whether or not the user is
+   hovering the element. */
+.rp-commented {
+  background-color: var(--rp-comment-bg) !important;
+  box-shadow: inset 2px 0 0 var(--rp-warn);
+  border-radius: 2px;
+}
+/* Mermaid SVG groups can't render the tint via CSS background → use a
+   subtle stroke instead. */
+.mermaid svg .rp-commented {
+  background-color: transparent !important;
+  box-shadow: none;
+  outline: 2px solid var(--rp-warn);
+  outline-offset: 2px;
+}
+
+/* A commented selection — wraps the original selected text range. Stays
+   in the DOM after the popover closes so the user can see what they
+   commented on. */
+mark.rp-comment-mark {
+  background-color: var(--rp-mark-bg);
+  color: inherit;
+  border-radius: 2px;
+  padding: 0 1px;
+  cursor: pointer;
+}
+mark.rp-comment-mark:hover {
+  background-color: var(--rp-mark-bg-hover);
+}
+/* Existing commented elements are clickable (re-opens the popover). */
+.rp-commented,
+.rp-line-marker { cursor: pointer; }
+
+/* Per-line marker inside a <pre>, anchored at the right edge of the line.
+   Used because tinting the whole <pre> would be misleading when only one
+   line is commented. */
+.rp-line-marker {
+  position: absolute;
+  right: 4px;
+  font-size: 0.85em;
+  line-height: 1;
+  cursor: help;
+  user-select: none;
+  z-index: 2;
+  filter: drop-shadow(0 0 2px var(--rp-line-marker-glow));
+}
+.rp-line-marker::before {
+  content: "💬";
+}
+pre { position: relative; }
+
+/* Hovered code-line overlay (managed by JS, positioned over the line). */
+.rp-line-hover-overlay {
+  position: absolute;
+  z-index: 5;
+  pointer-events: none;     /* must let mousemove pass through to <pre> */
+  background: var(--rp-line-hover-bg);
+  border-left: 3px solid var(--rp-accent);
+  display: none;
+}
+.rp-line-hover-overlay.visible { display: block; }
+
+/* Hover affordance on commentable structural elements (cell-only, line-only). */
+.file-tree li > .tree-line-text,
+table td,
+table th {
+  transition: background 0.1s ease;
+}
+.file-tree li > .tree-line-text:hover {
+  background: var(--rp-bg-soft);
+}
+/* Highlight only the hovered cell, not its row. */
+table td:hover,
+table th:hover {
+  background: var(--rp-bg-soft);
+}
+
+/* --- Theme toggle ---------------------------------------------------- */
+.rp-theme-toggle {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 20;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--rp-bg);
+  border: 1px solid var(--rp-border);
+  color: var(--rp-text-muted);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.05em;
+  font-family: inherit;
+  box-shadow: var(--rp-shadow-soft);
+  transition: color 0.12s, border-color 0.12s, background 0.12s, transform 0.12s;
+  padding: 0;
+}
+.rp-theme-toggle:hover {
+  color: var(--rp-accent);
+  border-color: var(--rp-accent);
+}
+.rp-theme-toggle:active { transform: scale(0.95); }
+.rp-theme-toggle:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--rp-focus-ring);
+}
+.rp-theme-icon::before { content: "🌙"; }
+[data-theme="dark"] .rp-theme-icon::before { content: "☀️"; }
+
+/* --- Submit bar ------------------------------------------------------ */
+.rp-submit-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--rp-bg);
+  border-top: 1px solid var(--rp-border);
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  box-shadow: var(--rp-shadow-bar);
+  z-index: 10;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+.rp-submit-bar .rp-status {
+  font-size: 0.9em;
+  color: var(--rp-text-muted);
+}
+.rp-submit-bar .rp-status .count { font-weight: 600; color: var(--rp-text); }
+.rp-submit-bar .rp-actions { display: flex; gap: 10px; align-items: center; }
+.rp-submit-bar button {
+  padding: 8px 14px;
+  border-radius: var(--rp-radius);
+  border: 1px solid var(--rp-border);
+  background: var(--rp-bg);
+  color: var(--rp-text);
+  font-size: 0.95em;
+  font-family: inherit;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.12s ease, border-color 0.12s ease, color 0.12s ease, box-shadow 0.12s ease;
+}
+.rp-submit-bar button:hover { background: var(--rp-bg-soft); }
+.rp-submit-bar button:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--rp-focus-ring);
+}
+
+/* Reject — ghost. Calm by default; reveals red intent on hover. */
+.rp-submit-bar button.ghost {
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--rp-text-muted);
+}
+.rp-submit-bar button.ghost:hover {
+  background: var(--rp-del-bg);
+  color: var(--rp-danger);
+  border-color: var(--rp-del-border);
+}
+
+/* Approve & build — outlined; same color family as primary, lighter weight. */
+.rp-submit-bar button.outline {
+  background: var(--rp-bg);
+  color: var(--rp-success);
+  border: 1.5px solid var(--rp-success);
+  font-weight: 600;
+}
+.rp-submit-bar button.outline:hover {
+  background: var(--rp-add-bg);
+}
+
+/* Approve — primary, dominant: solid fill, larger, default Enter target. */
+.rp-submit-bar button.primary {
+  background: var(--rp-success);
+  color: white;
+  border: 1.5px solid var(--rp-success);
+  padding: 9px 22px;
+  font-weight: 600;
+  font-size: 1em;
+  box-shadow: 0 1px 2px rgba(26, 127, 55, 0.25);
+}
+.rp-submit-bar button.primary:hover {
+  background: var(--rp-success-hover);
+  border-color: var(--rp-success-hover);
+  box-shadow: 0 2px 6px rgba(26, 127, 55, 0.35);
+}
+
+/* Legacy alias (older sample plans / external code). */
+.rp-submit-bar button.danger {
+  background: var(--rp-bg);
+  color: var(--rp-danger);
+  border-color: var(--rp-border);
+}
+.rp-submit-bar button.danger:hover { background: var(--rp-del-bg); }
+
+/* --- Modal status ---------------------------------------------------- */
+.rp-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--rp-overlay);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+.rp-overlay[hidden] { display: none; }
+.rp-overlay-box {
+  background: var(--rp-bg);
+  color: var(--rp-text);
+  border-radius: var(--rp-radius);
+  padding: 32px 40px;
+  max-width: 480px;
+  text-align: center;
+  box-shadow: var(--rp-shadow-modal);
+}
+.rp-overlay-box h2 { margin-top: 0; border: none; }
+.rp-overlay-box p { color: var(--rp-text-muted); }
+
+/* --- Utility --------------------------------------------------------- */
+.rp-pill {
+  display: inline-block;
+  padding: 1px 8px;
+  font-size: 0.78em;
+  border-radius: 10px;
+  background: var(--rp-bg-soft);
+  color: var(--rp-text-muted);
+  border: 1px solid var(--rp-border-soft);
+  font-weight: 500;
+}
+.rp-pill.success { background: var(--rp-add-bg); color: var(--rp-success); border-color: var(--rp-add-border); }
+.rp-pill.warn    { background: var(--rp-edit-bg); color: var(--rp-warn);   border-color: var(--rp-edit-border); }
+.rp-pill.danger  { background: var(--rp-del-bg); color: var(--rp-danger);  border-color: var(--rp-del-border); }

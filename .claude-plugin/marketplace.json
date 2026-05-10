@@ -1,0 +1,18 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "rich-plan",
+  "owner": {
+    "name": "Dario Spagnolo"
+  },
+  "metadata": {
+    "description": "Rich-plan: review implementation plans as a self-contained HTML page in the browser",
+    "homepage": "https://github.com/dario-spagnolo/rich-plan"
+  },
+  "plugins": [
+    {
+      "name": "rich-plan",
+      "source": "./plugin",
+      "description": "Render an implementation plan as a self-contained HTML page reviewed in the browser. Captures user edits, anchored comments, and structured decisions. Bundles the rich-plan-designer subagent for multi-perspective design synthesis."
+    }
+  ]
+}

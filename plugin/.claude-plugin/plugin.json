@@ -1,0 +1,5 @@
+{
+  "name": "rich-plan",
+  "version": "0.4.0",
+  "description": "Render an implementation plan as a self-contained HTML page reviewed in the browser. Captures user edits, anchored comments, and structured decisions. Bundles the rich-plan-designer subagent for multi-perspective design synthesis."
+}

@@ -1,0 +1,18 @@
+# Generated plan instances (output, not source)
+.rich-plans/
+
+# Local scratch / dev notes
+stuff/
+
+# Python bytecode
+__pycache__/
+*.pyc
+
+# Browser automation cache (Playwright/Chrome MCP)
+.playwright-mcp/
+
+# Editor / OS
+CLAUDE.md
+.DS_Store
+.idea/
+.vscode/
