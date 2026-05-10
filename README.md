@@ -11,6 +11,24 @@ When you ask Claude to plan a non-trivial change, the skill:
 
 Useful for bigger refactors, design choices, anything where async deliberation beats real-time chat.
 
+## Screenshots
+
+**Live, tunable previews.** Sliders, color pickers and dropdowns wire up to a working preview of the component being planned — your final values are captured as design tokens for the implementation.
+
+![Live preview with sliders and color picker driving a real button](docs/screenshots/live-preview.png)
+
+**Anchored comments.** Hover any file in a tree, any code line, any section — leave a comment in place. Comments come back to the agent with their target locator, so it knows exactly what you were pointing at.
+
+![Comment anchored to a file in the affected-files tree](docs/screenshots/anchored-comment.png)
+
+**Structured forms.** Multiple-choice questions and free-form custom forms (rankings, multi-selects, design widgets) are first-class — answers come back as typed data, not free text the agent has to parse.
+
+![Multi-select form picking which analytics events to instrument](docs/screenshots/structured-form.png)
+
+**Visual richness.** Mermaid diagrams, file trees with CREATE / EDIT / DELETE badges, rendered diffs, syntax-highlighted code, semantic pills.
+
+![Mermaid flowchart of the click-to-toast flow with colored nodes](docs/screenshots/flow-diagram.png)
+
 ## Compared to built-in `/plan`
 
 `/plan` keeps everything in the chat: you read, you reply, you scroll. rich-plan moves the review out of the conversation and into a page you can sit with.
